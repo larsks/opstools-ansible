@@ -1,0 +1,50 @@
+server1 ansible_host=192.168.122.229 ansible_user=centos ansible_become=true
+server2 ansible_host=192.168.122.22 ansible_user=centos ansible_become=true
+
+[web_hosts]
+server1
+
+[am_hosts]
+server2
+
+[pm_hosts]
+
+[logging_hosts]
+server1
+
+# ------------------------------------------
+
+[rabbit_hosts]
+[redis_hosts]
+[sensu_hosts]
+[uchiwa_hosts]
+[fluent_hosts]
+[elastic_hosts]
+[kibana_hosts]
+[grafana_hosts]
+
+# ------------------------------------------
+
+[rabbit_hosts:children]
+am_hosts
+
+[redis_hosts:children]
+am_hosts
+
+[sensu_hosts:children]
+am_hosts
+
+[uchiwa_hosts:children]
+web_hosts
+
+[fluent_hosts:children]
+logging_hosts
+
+[elastic_hosts:children]
+logging_hosts
+
+[kibana_hosts:children]
+web_hosts
+
+[grafana_hosts:children]
+web_hosts
